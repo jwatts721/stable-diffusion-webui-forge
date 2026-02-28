@@ -211,3 +211,23 @@ See also [Forge's Unet Implementation](https://github.com/lllyasviel/stable-diff
 # Under Construction
 
 WebUI Forge is now under some constructions, and docs / UI / functionality may change with updates.
+
+## Supplemental Information (Patched Version)
+
+Fix the "pycairo" Error
+
+### Install the system-level packages and development headers
+sudo apt update
+sudo apt install -y libcairo2-dev pkg-config
+
+# For newer Ubuntu
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.10-dev
+
+Fix the "joblib" Error
+### Activate the environment
+source venv/bin/activate
+
+### Install joblib and pycairo
+pip install joblib pycairo

@@ -201,7 +201,7 @@ else
     printf "\n%s\n" "${delimiter}"
     printf "Clone stable-diffusion-webui"
     printf "\n%s\n" "${delimiter}"
-    "${GIT}" clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git "${clone_dir}"
+    "${GIT}" clone https://github.com/jwatts721/stable-diffusion-webui.git "${clone_dir}"
     cd "${clone_dir}"/ || { printf "\e[1m\e[31mERROR: Can't cd to %s/%s/, aborting...\e[0m" "${install_dir}" "${clone_dir}"; exit 1; }
 fi
 
@@ -215,6 +215,16 @@ then
     then
         "${python_cmd}" -m venv "${venv_dir}"
         "${venv_dir}"/bin/python -m pip install --upgrade pip
+
+        # Install clip and joblib before requirements.txt to avoid some compatibility issues with torch 2.0.0 and xformers
+        "${venv_dir}"/bin/python -m pip install clip joblib
+
+        # Install specific versions of numpy and opencv to avoid compatibility issues with torch 2.0.0 and xformers
+        "${venv_dir}"/bin/python -m pip install "numpy<2.0.0" "opencv-contrib-python<4.9.0" "opencv-python<4.9.0"
+
+        # Install pycairo
+        "${venv_dir}"/bin/python -m pip install pycairo
+        
         first_launch=1
     fi
     # shellcheck source=/dev/null
